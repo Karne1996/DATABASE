@@ -1,0 +1,492 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchr(10),
+    -> C text,
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adventureworks     |
+| db2                |
+| mydb               |
+| mysql              |
+| performance_schema |
+| practice1          |
+| pranav             |
+| test               |
+| vita               |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> USE adventureworks;
+Database changed
+mysql>
+mysql>
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchr(10),
+    -> C text,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchr(10),
+C text,
+)' at line 4
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchar(10),
+    -> C text,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 6
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchr(10),
+    -> C text
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchr(10),
+C text
+)' at line 4
+mysql> CREATE TABLE TextDataTypes
+    -> (
+    -> A char(10),
+    -> B varchar(10),
+    -> C text
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql>
+mysql> INSERT INTO TextDataTYPES
+    -> VALUES
+    -> ('ABCD','AKASH','Text data-largerstring are accepted here'),
+    -> ('ABCDefg','Akii','Text data-largerstring are accepted here');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *
+    -> FROM TextDataTypes;
++---------+-------+------------------------------------------+
+| A       | B     | C                                        |
++---------+-------+------------------------------------------+
+| ABCD    | AKASH | Text data-largerstring are accepted here |
+| ABCDefg | Akii  | Text data-largerstring are accepted here |
++---------+-------+------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT length(A),length(B)
+    -> FROM TextDataTypes;
++-----------+-----------+
+| length(A) | length(B) |
++-----------+-----------+
+|         4 |         5 |
+|         7 |         4 |
++-----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> CREATE TABLE NumDatatypes
+    -> (
+    -> A tinyint,
+    -> B smallint,
+    -> C mediumint,
+    -> D int,
+    -> E bigint,
+    -> F decimal(8, 2),
+    -> G double(8,2),
+    -> H float
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO NumDatatypes VALUES
+    -> (13, 130, 33456, 333456, 33333456,
+    -> 999999.99, 999999.99, 999999.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql>
+mysql> INSERT INTO NumDatatypes VALUES
+    -> (110, 234, 3345, 33345, 3333345,
+    -> 999999.9, 999999.99, 999999.99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT *
+    -> FROM NumDatatypes;
++------+------+-------+--------+----------+-----------+-----------+---------+
+| A    | B    | C     | D      | E        | F         | G         | H       |
++------+------+-------+--------+----------+-----------+-----------+---------+
+|   13 |  130 | 33456 | 333456 | 33333456 | 999999.99 | 999999.99 | 1000000 |
+|  110 |  234 |  3345 |  33345 |  3333345 | 999999.90 | 999999.99 | 1000000 |
++------+------+-------+--------+----------+-----------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> CREATE TABLE DateDataTypes
+    -> (
+    -> A date,
+    -> B datetime,
+    -> C timestamp,
+    -> D time
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO DateDataTypes VALUES
+    -> (Current_date(), now(), now(),
+    -> now());
+Query OK, 1 row affected (0.03 sec)
+
+mysql>
+mysql> SELECT *
+    ->   FROM DateDataTypes;
++------------+---------------------+---------------------+----------+
+| A          | B                   | C                   | D        |
++------------+---------------------+---------------------+----------+
+| 2019-08-26 | 2019-08-26 19:22:12 | 2019-08-26 19:22:12 | 19:22:12 |
++------------+---------------------+---------------------+----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> INSERT INTO DateDataTypes VALUES
+    -> ('2019-13-26',
+    ->  '2019-08-26 10:30:23',
+    ->  '20190826103023',
+    ->  '10:30:23'
+    -> );
+ERROR 1292 (22007): Incorrect date value: '2019-13-26' for column 'A' at row 1
+mysql>
+mysql>
+mysql> INSERT INTO DateDataTypes VALUES
+    -> ('2019-12-26',
+    ->  '2019-08-26 10:30:23',
+    ->  '20190826103023',
+    ->  '10:30:23'
+    -> );
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT *
+    ->   FROM DateDataTypes;
++------------+---------------------+---------------------+----------+
+| A          | B                   | C                   | D        |
++------------+---------------------+---------------------+----------+
+| 2019-08-26 | 2019-08-26 19:22:12 | 2019-08-26 19:22:12 | 19:22:12 |
+| 2019-12-26 | 2019-08-26 10:30:23 | 2019-08-26 10:30:23 | 10:30:23 |
++------------+---------------------+---------------------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> INSERT INTO DateDataTypes VALUES
+    -> ('2019-02-30',
+    ->  '2019-08-26 10:30:23',
+    ->  '20190826103023',
+    ->  '10:30:23'
+    -> );
+ERROR 1292 (22007): Incorrect date value: '2019-02-30' for column 'A' at row 1
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> CREATE TABLE SplDataTypes
+    -> (
+    ->   ID int AUTO_INCREMENT
+    ->   primary key,
+    ->   Membership ENUM('Silver',
+    ->   'Gold', 'Platinum'),
+    ->   Hobbies SET('Swimming',
+    ->   'Sking', 'Cricket',
+    ->   'Football')
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO SplDataTypes
+    -> (Membership, Hobbies)
+    ->  VALUES
+    -> ('Silver',
+    ->  'Sking,bowling'
+    -> );
+ERROR 1265 (01000): Data truncated for column 'Hobbies' at row 1
+mysql> INSERT INTO SplDataTypes
+    -> (Membership, Hobbies)
+    ->  VALUES
+    -> ('Silver',
+    ->  'Sking,cricket',
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 6
+mysql> INSERT INTO SplDataTypes
+    -> (Membership, Hobbies)
+    ->  VALUES
+    -> ('Silver',
+    ->  'Sking,cricket');
+Query OK, 1 row affected (0.02 sec)
+
+mysql>
+mysql>
+mysql> SELECT *
+    ->   FROM SplDataTypes;
++----+------------+---------------+
+| ID | Membership | Hobbies       |
++----+------------+---------------+
+|  1 | Silver     | Sking,Cricket |
++----+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> CREATE TABLE Product
+    -> (
+    -> productID int primery key,
+    -> name varchar(20),
+    -> year int
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primery key,
+name varchar(20),
+year int
+)' at line 3
+mysql> CREATE TABLE Product
+    -> (
+    -> productID int,
+    -> name varchar(20),
+    -> year int
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Product VALUES(1,'BIKE',96);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT *
+    -> FROM Product;
++-----------+------+------+
+| productID | name | year |
++-----------+------+------+
+|         1 | BIKE |   96 |
++-----------+------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO Product VALUES(1,'cloth',86);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(1,'accessories',99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(1,'components',02);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(1,'XYZ',03);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(2,'cloth',86);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(3,'accessories',99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(4,'components',02);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO Product VALUES(5,'XYZ',03);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO Product VALUES(6,'ABC',04);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> SELECT *
+    -> FROM PRODUCT;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         1 | BIKE        |   96 |
+|         1 | cloth       |   86 |
+|         1 | accessories |   99 |
+|         1 | components  |    2 |
+|         1 | XYZ         |    3 |
+|         2 | cloth       |   86 |
+|         3 | accessories |   99 |
+|         4 | components  |    2 |
+|         5 | XYZ         |    3 |
+|         6 | ABC         |    4 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql> DELETE FROM Product
+    -> WHERW productID =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERW productID =1' at line 2
+mysql> DELETE FROM Product
+    -> WHERW productID = '1';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERW productID = '1'' at line 2
+mysql>
+mysql>
+mysql>
+mysql> SELECT *
+    -> FROM PRODUCT;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         1 | BIKE        |   96 |
+|         1 | cloth       |   86 |
+|         1 | accessories |   99 |
+|         1 | components  |    2 |
+|         1 | XYZ         |    3 |
+|         2 | cloth       |   86 |
+|         3 | accessories |   99 |
+|         4 | components  |    2 |
+|         5 | XYZ         |    3 |
+|         6 | ABC         |    4 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT *
+    ->   FROM Product
+    ->   ORDER BY Name ASC;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         6 | ABC         |    4 |
+|         3 | accessories |   99 |
+|         1 | accessories |   99 |
+|         1 | BIKE        |   96 |
+|         1 | cloth       |   86 |
+|         2 | cloth       |   86 |
+|         1 | components  |    2 |
+|         4 | components  |    2 |
+|         1 | XYZ         |    3 |
+|         5 | XYZ         |    3 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->   FROM Product
+    ->   ORDER BY name;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         6 | ABC         |    4 |
+|         3 | accessories |   99 |
+|         1 | accessories |   99 |
+|         1 | BIKE        |   96 |
+|         1 | cloth       |   86 |
+|         2 | cloth       |   86 |
+|         1 | components  |    2 |
+|         4 | components  |    2 |
+|         1 | XYZ         |    3 |
+|         5 | XYZ         |    3 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->   FROM Product
+    ->   ORDER BY Name DESC;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         5 | XYZ         |    3 |
+|         1 | XYZ         |    3 |
+|         1 | components  |    2 |
+|         4 | components  |    2 |
+|         2 | cloth       |   86 |
+|         1 | cloth       |   86 |
+|         1 | BIKE        |   96 |
+|         3 | accessories |   99 |
+|         1 | accessories |   99 |
+|         6 | ABC         |    4 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->   FROM Product
+    ->   ORDER BY ProductID DESC;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         6 | ABC         |    4 |
+|         5 | XYZ         |    3 |
+|         4 | components  |    2 |
+|         3 | accessories |   99 |
+|         2 | cloth       |   86 |
+|         1 | XYZ         |    3 |
+|         1 | components  |    2 |
+|         1 | accessories |   99 |
+|         1 | cloth       |   86 |
+|         1 | BIKE        |   96 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    ->   FROM Product
+    ->   ORDER BY ProductID DESC;
++-----------+-------------+------+
+| productID | name        | year |
++-----------+-------------+------+
+|         6 | ABC         |    4 |
+|         5 | XYZ         |    3 |
+|         4 | components  |    2 |
+|         3 | accessories |   99 |
+|         2 | cloth       |   86 |
+|         1 | XYZ         |    3 |
+|         1 | components  |    2 |
+|         1 | accessories |   99 |
+|         1 | cloth       |   86 |
+|         1 | BIKE        |   96 |
++-----------+-------------+------+
+10 rows in set (0.00 sec)
+
+mysql>
+mysql>
+mysql> SELECT ProductID AS ID,
+    ->        name
+    ->   FROM Product
+    ->   ORDER BY ProductID DESC;
++------+-------------+
+| ID   | name        |
++------+-------------+
+|    6 | ABC         |
+|    5 | XYZ         |
+|    4 | components  |
+|    3 | accessories |
+|    2 | cloth       |
+|    1 | XYZ         |
+|    1 | components  |
+|    1 | accessories |
+|    1 | cloth       |
+|    1 | BIKE        |
++------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT ProductID AS CatID,
+    ->        Name
+    ->   FROM Product
+    ->   ORDER BY CatID DESC;
++-------+-------------+
+| CatID | Name        |
++-------+-------------+
+|     6 | ABC         |
+|     5 | XYZ         |
+|     4 | components  |
+|     3 | accessories |
+|     2 | cloth       |
+|     1 | XYZ         |
+|     1 | components  |
+|     1 | accessories |
+|     1 | cloth       |
+|     1 | BIKE        |
++-------+-------------+
+10 rows in set (0.00 sec)
+
+mysql>
